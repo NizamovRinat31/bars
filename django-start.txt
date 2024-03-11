@@ -9,6 +9,7 @@ code . (или просто откройте папку проекта ваши�
 
 python -m venv venv
 venv/Scripts/activate
+pip install -r requirements.txt
 
 pip install django
 pip install python-dotenv
@@ -48,6 +49,8 @@ STATIC_ROOT = BASE_DIR / 'static'
 заменить
 LANGUAGE_CODE = 'ru-ru'
 
+
+
 Команды
 ------
 
@@ -56,8 +59,8 @@ python manage.py runserver - запустить сервер
 python manage.py startapp name - создать подприложение name
 Нужно будет добавить приложение в INSTALLED_APPS
 
-python manage.py makemigrations app_name - если вы изменили модели, этой командой создается миграция - обновление базы данных
-python manage.py migrate - обновление/создание базы данных
+python manage.py makemigrations app_name - если вы изменили модели, этой командой создается миграция - обновление базы данных (python .\manage.py makemigrations)
+python manage.py migrate - обновление/создание базы данных (python .\manage.py migrate   )
 
 python manage.py createsuperuser --username admin --email admin@domain.com
 - добавить админ пользователя/ чтобы зайти от его имени нужно набрать 127.0.0.1:8000/admin
