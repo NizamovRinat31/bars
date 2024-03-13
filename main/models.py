@@ -6,3 +6,4 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     discount_price = models.DecimalField(max_digits=12, decimal_places=2, null=True)
     count = models.IntegerField(default=0)
+    
