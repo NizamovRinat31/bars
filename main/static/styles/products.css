@@ -28,3 +28,9 @@
 .product-card_disabled {
     opacity: 0.5;
 }
+
+.product-card__image {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+}
