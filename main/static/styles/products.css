@@ -21,3 +21,10 @@
     margin: 0 auto;
 }
 
+.product-card__prices-container {
+    height: 2em;
+}
+
+.product-card_disabled {
+    opacity: 0.5;
+}
