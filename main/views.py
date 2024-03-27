@@ -1,5 +1,6 @@
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.db.models import Sum
 
 from .models import Product
 
@@ -63,7 +64,7 @@ def basket_view(request: HttpRequest):
     for item in items:
         item['product'] = Product.objects.get(id=item['product_id'])
 
-    total_price = sum(item['product'].price * item['quantity'] * 25
+    total_price = sum(item['product'].price * item['quantity']
                       for item in items)
 
     return HttpResponse(render(request, 'basket.html', {
@@ -76,3 +77,24 @@ def basket_clear_view(request: HttpRequest):
     request.session.update({'basket': []})
 
     return redirect('basket')
+
+
+def order_view(request: HttpRequest):
+    if request.method == 'GET':
+        if not request.user.is_authenticated:
+            login_page = redirect('login')
+            login_page['Location'] += '?next=/order'
+            return login_page
+
+        if len(request.session.get('basket', [])) < 1:
+            return redirect('basket')
+
+        basket_products_ids = [item['product_id']
+                               for item in request.session.get('basket', [])]
+        basket_products = Product.objects.filter(id__in=basket_products_ids)
+
+        basket_sum = basket_products.aggregate(sum_=Sum('price'))['sum_']
+
+        return HttpResponse(render(request, 'order.html', {
+            'order_sum': basket_sum
+        }))
