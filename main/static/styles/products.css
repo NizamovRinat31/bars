@@ -19,12 +19,11 @@
     width: 1em;
 } 
 
-
 .product-list {
     margin: 0 auto;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 2em;
     flex-wrap: wrap;
 }
@@ -58,4 +57,10 @@
 
 .product-card__original-price {
     text-decoration: line-through;
+}
+
+.products_page__horizonal_line {
+    margin: 1em 0;
+    border: 1px solid rgb(160, 160, 160);
+    height: 1px;
 }
