@@ -12,14 +12,19 @@
 </head>
 <body>
     <header class="header">
-        <img class="logo" src="{% static 'icons/toplivnaya-kompaniya-bars.webp' %}" alt="profile">
+        <div class="logo-div">
+            <img class="logo" src="{% static 'icons/toplivnaya-kompaniya-bars.webp' %}" alt="profile">
+            <div class="logo-text">
+                <span class="text-block-wrap-div">Оптовая торговля бензином, дизельным топливом, нефтепродуктами.</span>
+            </div>
+        </div>
         <div class="menu">
             <nav class="nav-menu">
                 <ul class="nav-menu__list">
                     <li><a href="{% url 'products' %}">Товары</a></li>
                     <li><a href="{% url 'basket' %}">Корзина</a></li>
                     {% if user.is_authenticated %}
-                    <li class="nav-menu__profile"><a href="{% url 'profile' %}"><img class="nav-menu__profile-icon" src="{% static 'icons/profile.png' %}" alt="profile"></a></li>
+                    <li class="nav-menu__profile"><a href="{% url 'profile' %}"><img class="nav-menu__profile-icon" src="{% static 'icons/profile.jpg' %}" alt="profile"></a></li>
                     {% else %}
                     <li><a href="{% url 'login' %}">Войти</a></li>
                     {% endif %}
@@ -36,7 +41,149 @@
         {% endblock %}
     </main>
     <footer>
-        <p><small>© 2024, Все права защищены</small></p>
+        <div class='section section--u-ic66j8deb' id='ic66j8deb_0' data-do-section='{"screen":{"scroll":false,"smooth":true}}'>
+            <div class='section section--u-icor7cmxq' id='icor7cmxq_0' data-do-section='{"screen":{"scroll":false,"smooth":true}}'>
+            <div class='container container--u-i6elqx4rw' id='i6elqx4rw_0'>
+            <div class='div div--u-i3qsbb6h4' id='i3qsbb6h4_0'>
+            <div class='div div--u-igslgkwrl' id='igslgkwrl_0'>
+            <div class='div div--u-i9q2wj1c9' id='i9q2wj1c9_0'>
+            <div class='div div--u-ibqppqxtm' id='ibqppqxtm_0'>
+            <div class='div div--u-in2kg719y' id='in2kg719y_0'>
+            <span class='svg_image svg_image--u-itd9aoyj5' id='itd9aoyj5_0' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="60.81" height="60.813" viewBox="0 0 60.81 60.813" data-prefix="i2suy4v79"><path data-name="21.svg" d="M13.95 2.21l8.97 11.527.11.183a5.528 5.528 0 0 1 .91 1.857 5.753 5.753 0 0 1 .12 2.273 5.858 5.858 0 0 1-.76 2.148l-.07.141a5.927 5.927 0 0 1-1.47 1.525l-.14.092-4.36 3.184a3.733 3.733 0 0 0 .6 3.725 56.583 56.583 0 0 0 6.41 7.662l.01.008v-.008a55.566 55.566 0 0 0 7.67 6.412 3.749 3.749 0 0 0 3.73.6l3.28-4.493h-.01a5.523 5.523 0 0 1 1.68-1.553l-.01-.006a5.785 5.785 0 0 1 2.15-.748l.09-.008a5.719 5.719 0 0 1 2.19.141l.12.034a5.708 5.708 0 0 1 1.91.987v-.01l11.55 8.958.18.158a5.673 5.673 0 0 1 1.38 1.733 5.594 5.594 0 0 1 .63 2.372 5.688 5.688 0 0 1-.4 2.4 5.762 5.762 0 0 1-1.41 2.024 16.614 16.614 0 0 1-2.76 2.074l-.14.074a19.984 19.984 0 0 1-3.77 1.7 30.881 30.881 0 0 1-19.62-.438A51.214 51.214 0 0 1 1.85 28.094 30.741 30.741 0 0 1 1.41 8.48a18.639 18.639 0 0 1 1.77-3.89l.01-.016h-.01a16.139 16.139 0 0 1 2.07-2.751A5.708 5.708 0 0 1 7.27.411l.19-.066a5.6 5.6 0 0 1 2.23-.34 5.747 5.747 0 0 1 2.37.622l.13.075 1.76 1.5zm5.28 14.4L10.26 5.082h.01a1.238 1.238 0 0 0-.29-.275l-.05-.024a1.208 1.208 0 0 0-.44-.117 1.257 1.257 0 0 0-.38.051l-.08.032a1 1 0 0 0-.36.259 11.866 11.866 0 0 0-1.49 2 14.178 14.178 0 0 0-1.35 2.954 26.177 26.177 0 0 0 .44 16.685 46.79 46.79 0 0 0 27.9 27.883 26.278 26.278 0 0 0 16.7.431 14.233 14.233 0 0 0 2.87-1.286l.09-.057a12.356 12.356 0 0 0 1.99-1.485 1.144 1.144 0 0 0 .27-.365v-.01a1.031 1.031 0 0 0 .06-.448 1.006 1.006 0 0 0-.1-.438v-.008a.887.887 0 0 0-.21-.267l-.09-.057-11.54-8.957.01-.008-.01-.009a1.2 1.2 0 0 0-.31-.166l-.06-.008a.83.83 0 0 0-.38-.025h-.03a1.178 1.178 0 0 0-.4.133 1.034 1.034 0 0 0-.3.282h-.01l-3.53 4.837a2.21 2.21 0 0 1-.76.719c0 .009-4.12 2.936-9.15-.579a60.675 60.675 0 0 1-8.3-6.924v-.009a61.609 61.609 0 0 1-6.95-8.286c-3.5-5.025-.57-9.147-.56-9.156a2.034 2.034 0 0 1 .62-.687l4.76-3.475.18-.127a1.026 1.026 0 0 0 .24-.24l.04-.066a1.092 1.092 0 0 0 .13-.4 1.343 1.343 0 0 0-.02-.408.623.623 0 0 0-.13-.281l-.06-.09zM13.95 2.221zm-.01-.009l.01.009-.01-.009z" fill-rule="evenodd" class="path-ig73s9fc8"/></svg>
+            </span>
+            </div>
+            <div class='div div--u-i6bm4a5hu' id='i6bm4a5hu_0'>
+            <div class='text text--u-ijfff2e2l' id='ijfff2e2l_0'>
+            <span class='text-block-wrap-div' >ЗВОНИТЕ С 8:00 ДО 18:00</span>
+            </div>
+            <a href='/' class='link-universal link-universal--u-ix14apggb' id='ix14apggb_0' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"link","blank":false}}'>
+            <div class='list list--u-ie70grjzn' id='ie70grjzn_0'>
+            <div class='list__item list__item--u-iuyn2rlmm' id='iuyn2rlmm_0'>
+            <a target='_self' href='tel:+7(906)818-48-22' class='link-universal link-universal--u-idhk3jlga' id='idhk3jlga_0' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"phone","blank":false}}'>
+            <div class='text text--u-i2orcyygn' id='i2orcyygn_0'>
+            <span class='text-block-wrap-div' >+7 (906) 818-48-21</span>
+            </div>
+            </a>
+            </div>
+            </div>
+            </a>
+            </div>
+            </div>
+            </div>
+            <div class='div div--u-ibbhsitb2' id='ibbhsitb2_0'>
+            <div class='div div--u-ijq8pmt65' id='ijq8pmt65_0'>
+            <span class='svg_image svg_image--u-i35o8obbc' id='i35o8obbc_0' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="44.281" height="55.38" viewBox="0 0 44.281 55.38" data-prefix="i5011mj4l"><path data-name="45.svg" d="M33.334 38.59L22.15 55.37 10.962 38.59A20.473 20.473 0 0 1 .002 20.77C.002 9.3 9.916.01 22.146.01S44.29 9.3 44.29 20.77a20.473 20.473 0 0 1-10.956 17.82zM22.15 6.93c-8.153 0-14.763 6.19-14.763 13.84s6.61 13.84 14.763 13.84 14.763-6.2 14.763-13.84S30.303 6.93 22.15 6.93zm0 20.76a6.934 6.934 0 1 1 7.381-6.92 7.164 7.164 0 0 1-7.381 6.92z" fill-rule="evenodd" class="path-irotmi346"/></svg>
+            </span>
+            </div>
+            <div class='div div--u-i1yvs4hyj' id='i1yvs4hyj_0'>
+            <div class='text text--u-ibuks76u0' id='ibuks76u0_0'>
+            <span class='text-block-wrap-div' >НАШ АДРЕС:</span>
+            </div>
+            <div class='text text--u-inhmt9kku' id='inhmt9kku_0'>
+            <span class='text-block-wrap-div' >Удмуртская Республика, г. Ижевск.</span>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class='div div--u-idswpetqa' id='idswpetqa_0'>
+            <div class='div div--u-i4bhj2d08' id='i4bhj2d08_0'>
+            <div class='div div--u-i8vbk3grv' id='i8vbk3grv_0'>
+            <div class='text text--u-ioqgrpr54' id='ioqgrpr54_0'>
+            <span class='text-block-wrap-div' >EMAIL:</span>
+            </div>
+            <a target='_self' href='mailto:login@domain.ru' class='link-universal link-universal--u-ik1favw2l' id='ik1favw2l_0' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"email","blank":false}}'>
+            <div class='text text--u-ivt2exgsy' id='ivt2exgsy_0'>
+            <span class='text-block-wrap-div' >trade@tk-bars.ru</span>
+            </div>
+            </a>
+            </div>
+            <span class='svg_image svg_image--u-ix5wm1a71' id='ix5wm1a71_0' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="49.781" height="38.72" viewBox="0 0 49.781 38.72" data-prefix="ii6xihfam"><path data-name="46.svg" d="M44.805-.01H4.989A4.9 4.9 0 0 0 .037 4.83L.012 33.88a4.919 4.919 0 0 0 4.977 4.84h39.816a4.919 4.919 0 0 0 4.976-4.84V4.83a4.925 4.925 0 0 0-4.976-4.84zm0 9.68L24.897 21.78 4.989 9.67V4.83l19.908 12.11L44.805 4.83v4.84z" fill-rule="evenodd" class="path-itzsykjn6"/></svg>
+            </span>
+            </div>
+            <div class='div div--u-ijppb1943' id='ijppb1943_0'>
+            <div class='text text--u-itutpc0wf' id='itutpc0wf_0'>
+            <span class='text-block-wrap-div' >МЫ В СОЦИАЛЬНЫХ СЕТЯХ</span>
+            </div>
+            <div class='list list--u-ij4rod405' id='ij4rod405_0'>
+            <div class='list__item list__item--u-iteo576go' id='iteo576go_0'>
+            <a target='_blank' href='https://vk.com/' class='link-universal link-universal--u-ifzeab07v' id='ifzeab07v_0' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"link","blank":true}}'>
+            <span class='svg_image svg_image--u-i5r7psppp' id='i5r7psppp_0' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="20.031" viewBox="0 0 35 20.031" data-prefix="ixg65q74p"><path data-name="200.svg" d="M17.122 19.933h2.092a1.768 1.768 0 0 0 .955-.419 1.545 1.545 0 0 0 .287-.922s-.041-2.816 1.262-3.23c1.284-.409 2.934 2.721 4.682 3.925a3.309 3.309 0 0 0 2.326.711l4.674-.065s2.445-.151 1.286-2.08a15.637 15.637 0 0 0-3.476-4.034c-2.931-2.729-2.538-2.287.993-7.008 2.15-2.874 3.009-4.629 2.741-5.381-.256-.716-1.838-.527-1.838-.527l-5.263.033a1.184 1.184 0 0 0-.679.12 1.47 1.47 0 0 0-.464.566 30.684 30.684 0 0 1-1.945 4.117c-2.343 3.992-3.28 4.2-3.663 3.955-.892-.578-.669-2.321-.669-3.56 0-3.868.585-5.481-1.139-5.9a9 9 0 0 0-2.456-.245 11.332 11.332 0 0 0-4.368.448c-.6.295-1.06.95-.779.987a2.361 2.361 0 0 1 1.553.784 5.1 5.1 0 0 1 .521 2.389s.31 4.554-.724 5.119c-.709.389-1.682-.4-3.772-4.025a33.717 33.717 0 0 1-1.878-3.906 1.578 1.578 0 0 0-.434-.589 2.183 2.183 0 0 0-.809-.327l-5 .033a1.7 1.7 0 0 0-1.026.349 1.093 1.093 0 0 0-.02.893s3.915 9.189 8.349 13.82a11.992 11.992 0 0 0 8.681 3.969z" fill-rule="evenodd" class="path-i4lxn94r9"/></svg>
+            </span>
+            </a>
+            </div>
+            <div class='list__item list__item--u-iteo576go' id='iteo576go_1'>
+            <a target='_blank' href='https://www.instagram.com/' class='link-universal link-universal--u-ifzeab07v' id='ifzeab07v_1' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"link","blank":true}}'>
+            <span class='svg_image svg_image--u-i5r7psppp' id='i5r7psppp_1' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" data-prefix="igd4ddl2k"><path data-name="203.svg" d="M33.01 33.161a10.681 10.681 0 0 1-7.61 2.83H10.59a10.582 10.582 0 0 1-7.54-2.83A10.447 10.447 0 0 1 0 25.398V10.523C0 4.211 4.21.002 10.52.002h14.95a10.066 10.066 0 0 1 10.52 10.521V25.47a10.386 10.386 0 0 1-2.98 7.691zm-.21-22.638a7.5 7.5 0 0 0-1.96-5.224 7.243 7.243 0 0 0-5.3-1.959H10.59A7.369 7.369 0 0 0 5.3 5.226a7.218 7.218 0 0 0-1.96 5.3v14.875A7.278 7.278 0 0 0 5.3 30.77a7.486 7.486 0 0 0 5.29 1.886H25.4a7.486 7.486 0 0 0 5.29-1.886 7.08 7.08 0 0 0 2.11-5.3V10.523zm-5.16 0a2.1 2.1 0 1 1 2.11-2.1 2.1 2.1 0 0 1-2.11 2.1zm-9.65 16.688a9.287 9.287 0 0 1 0-18.574 9.287 9.287 0 1 1 0 18.574zm0-15.237a5.95 5.95 0 1 0 5.95 5.95 5.98 5.98 0 0 0-5.95-5.95z" fill-rule="evenodd" class="path-iryre9dno"/></svg>
+            </span>
+            </a>
+            </div>
+            <div class='list__item list__item--u-iteo576go' id='iteo576go_2'>
+            <a target='_blank' href='https://www.whatsapp.com' class='link-universal link-universal--u-ifzeab07v' id='ifzeab07v_2' data-do-link_universal='{"screen":{"type":"link","popup":"none","eventName":"none","eventElement":"self","eventAction":"","selectedTag":"","linkType":"link","blank":true}}'>
+            <span class='svg_image svg_image--u-i5r7psppp' id='i5r7psppp_2' data-do-svg_image='{"screen":{"stretch":true}}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" data-prefix="il5lle7uw"><path data-name="221.svg" d="M18.08 35.691h-.01a17.991 17.991 0 0 1-8.56-2.171l-9.5 2.481 2.54-9.242a17.937 17.937 0 1 1 15.53 8.932zM28.62 7.368A14.908 14.908 0 0 0 3.19 17.843a14.67 14.67 0 0 0 2.28 7.889l.35.561-1.51 5.47 5.64-1.471.55.321a14.89 14.89 0 0 0 7.58 2.066 14.889 14.889 0 0 0 14.9-14.824 14.715 14.715 0 0 0-4.36-10.487zm-4.79 18.967a6.156 6.156 0 0 1-2.82-.176 25.968 25.968 0 0 1-2.56-.939c-4.49-1.93-7.42-6.431-7.64-6.729a8.591 8.591 0 0 1-1.83-4.61 4.991 4.991 0 0 1 1.56-3.717 1.658 1.658 0 0 1 1.2-.558c.3 0 .6 0 .86.016a.887.887 0 0 1 1 .765c.38.892 1.27 3.086 1.38 3.309a.793.793 0 0 1 .04.78 2.876 2.876 0 0 1-.45.744c-.22.26-.47.581-.67.78a.643.643 0 0 0-.19.91 13.436 13.436 0 0 0 2.49 3.087 12.216 12.216 0 0 0 3.6 2.212.688.688 0 0 0 .97-.112c.26-.3 1.12-1.3 1.41-1.747a.7.7 0 0 1 1.01-.223c.41.149 2.61 1.227 3.06 1.45a2.251 2.251 0 0 1 .86.52 3.755 3.755 0 0 1-.26 2.12c-.37 1.04-2.16 1.991-3.02 2.114z" fill-rule="evenodd" class="path-i7aix7z7i"/></svg>
+            </span>
+            </a>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class='div div--u-i7l04bf0d' id='i7l04bf0d_0'>
+            <div class='container container--u-ir4imbml3' id='ir4imbml3_0'>
+            <div class='mosaic-form mosaic-form--u-ijylggzln' id='ijylggzln_0' data-do-form='{"screen":{"mode":"main","anketa_id":"16358901","initial_state":"{\"anketa_id\":\"16358901\",\"name\":\"\u0412\u0430\u043c \u043d\u0443\u0436\u043d\u043e \u0434\u0438\u0437\u0435\u043b\u044c\u043d\u043e\u0435 \u0442\u043e\u043f\u043b\u0438\u0432\u043e? \u0421\u0432\u044f\u0436\u0438\u0442\u0435\u0441\u044c \u0441 \u043d\u0430\u043c\u0438 \u0438\u043b\u0438 \u043e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u0441\u0432\u043e\u0439 \u043d\u043e\u043c\u0435\u0440.\",\"submit_name\":\"\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c\",\"success_note\":\"\u0421\u043f\u0430\u0441\u0438\u0431\u043e! \u0424\u043e\u0440\u043c\u0430 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0430\",\"tag_id\":\"ijylggzln\",\"symbol_id\":\"symbol-ic66j8deb\",\"change\":false,\"dictionaries\":{\"imlnu4zi3\":{\"dictionary_id\":67163501,\"name\":\"\u0422\u0435\u043b\u0435\u0444\u043e\u043d:\",\"type_id\":15,\"required\":true,\"alias\":\"phone\",\"note\":\"\",\"variants\":[],\"params_value\":\"\",\"validator\":\"__phone__\",\"change\":false}}}","nativeStyle":true}}'>
+            <form id="i60ijblif_0" action="#" class="mosaic-form__form mosaic-form__form--u-i60ijblif" data-s3-anketa-id="16358901"><div id="icdmtf7r8_0" class="mosaic-form__title mosaic-form__title--u-icdmtf7r8"><span class="text-block-wrap-div">Вам нужно дизельное топливо? Свяжитесь с нами или оставьте свой номер.</span></div><div id="ixygavzp1_0" class="text text--u-ixygavzp1"><span class="text-block-wrap-div">+7 (906) 818-48-21</span></div><div id="i60714du1_0" class="div div--u-i60714du1"><div id="iwi7ldm31_0" class="div div--u-iwi7ldm31"><button id="io0frnjz0_0" class="mosaic-form__button mosaic-form__button--u-io0frnjz0"><div id="ikvxzgmwf_0" class="button__text button__text--u-ikvxzgmwf"><span class="text-block-wrap-div">Отправить</span></div></button><div id="imlnu4zi3_0" data-type-field="phone" data-field-position="0" class="mosaic-form__field mosaic-form__field--u-imlnu4zi3" data-do-input_phone='{"screen":{"type_id":15,"required":true,"dictionary_id":67163501,"validator":"__phone__","alias":"phone"}}'><div id="iu5727alo_0" class="mosaic-form__header mosaic-form__header--u-iu5727alo"><span id="ig8ybmbp7_0" class="mosaic-form__name mosaic-form__name--u-ig8ybmbp7"><span class="text-block-wrap-div">Телефон:</span></span><span id="i6ut503ux_0" class="mosaic-form__required mosaic-form__required--u-i6ut503ux"><span class="text-block-wrap-div">*
+                </span></span></div><input id="izqjhxzp0_0" type="tel" placeholder="Телефон *" class="mosaic-form__text mosaic-form__text--u-izqjhxzp0"><!--noindex--><div id="ixwz5w1z2_0" class="mosaic-form__error mosaic-form__error--u-ixwz5w1z2 is-removed" data-nosnippet=""><span class="text-block-wrap-div">это поле обязательно для заполнения</span></div><!--/noindex--><div id="ifmbpf7j0_0" class="mosaic-form__note mosaic-form__note--u-ifmbpf7j0 is-removed"></div></div></div></div><re-captcha data-captcha="recaptcha"
+                 data-name="captcha"
+                 data-sitekey="6LcYvrMcAAAAAKyGWWuW4bP1De41Cn7t3mIjHyNN"
+                 data-lang="ru"
+                 data-rsize="invisible"
+                 data-type="image"
+                 data-theme="light"></re-captcha></form><!--noindex--><div id="ibaxvtt5l_0" class="mosaic-form__success mosaic-form__success--u-ibaxvtt5l is-removed" data-nosnippet=""><div id="if398boom_0" class="mosaic-form__success__text mosaic-form__success__text--u-if398boom"><span class="text-block-wrap-div">Спасибо! Форма отправлена</span></div></div><!--/noindex-->
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class='section section--u-i9r1x7aej' id='i9r1x7aej_0' data-do-section='{"screen":{"scroll":false,"smooth":true}}'>
+            <div class='container container--u-iys4q0dx9' id='iys4q0dx9_0'>
+            <div class='div div--u-i13fp5zvr' id='i13fp5zvr_0'>
+            <div class='mosaic-site-copyright mosaic-site-copyright--u-ic8ob5ydu' id='ic8ob5ydu_0'>
+              Copyright &copy; 2020 - 2024 ООО "БАРС"
+            </div>
+            </div>
+            <div class='div div--u-ikchvsb87' id='ikchvsb87_0'>
+            <div class='mosaic-site-counters mosaic-site-counters--u-i475brgjb' id='i475brgjb_0'>
+            <!--LiveInternet counter--><a href="https://www.liveinternet.ru/click"
+            target="_blank"><img id="licntC573" width="88" height="31" style="border:0" 
+            title="LiveInternet: number of pageviews for 24 hours, of visitors for 24 hours and for today is shown"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7"
+            alt=""/></a><script>(function(d,s){d.getElementById("licntC573").src=
+            "https://counter.yadro.ru/hit?t13.2;r"+escape(d.referrer)+
+            ((typeof(s)=="undefined")?"":";s"+s.width+"*"+s.height+"*"+
+            (s.colorDepth?s.colorDepth:s.pixelDepth))+";u"+escape(d.URL)+
+            ";h"+escape(d.title.substring(0,150))+";"+Math.random()})
+            (document,screen)</script><!--/LiveInternet-->
+            <!-- Pixel -->
+            <script type="text/javascript">
+                (function (d, w) {
+                    var n = d.getElementsByTagName("script")[0],
+                        s = d.createElement("script");
+                        s.type = "text/javascript";
+                        s.async = true;
+                        s.src = "https://qoopler.ru/index.php?ref="+d.referrer+"&page=" + encodeURIComponent(w.location.href);
+                        n.parentNode.insertBefore(s, n);
+                })(document, window);
+            </script>
+            <!-- /Pixel -->
+            <!--__INFO2024-04-15 00:37:52INFO__-->
+            
+            </div>
+            </div>
     </footer>
 </body>
 </html>

@@ -33,10 +33,11 @@
     })
   }
 
-  function updateTotalPrice(priceElement, price) {
-    console.log(priceElement.textContent);
+  // TODO: fix quantity doesnt change properly
+  function updateTotalPrice(priceElement, priceChange) {
+    const oldPrice = +priceElement.textContent;
     
-    const newPriceText = price.toFixed(2);
+    const newPriceText = (oldPrice + priceChange).toFixed(2);
 
     priceElement.textContent = newPriceText;
   }
@@ -51,12 +52,14 @@
       const productId = basketItem.dataset.id;
 
       quantityInput.addEventListener("change", async () => {
+        updateTotalPrice(totalPriceElement, basketItem.dataset.price * quantity);
+
         const quantity = await updateQuantity(
           csrfToken, productId,
           quantityInput, quantityInput.value
         );
         
-        updateTotalPrice(totalPriceElement, +basketItem.dataset.price * quantity);
+        updateTotalPrice(totalPriceElement, basketItem.dataset.price * quantity);
       });
     }
   });
@@ -83,6 +86,7 @@
 
         </div>
         <div class="basket-item__quantity-container">
+          Колличество тонн:
           <input type="number" min="0" max="{{ item.product.count  }}" class="basket-item__quantity input" value="{{ item.quantity }}">
         </div>
         <div class="basket-item__title">{{ item.product.title }}</div>
