@@ -57,3 +57,8 @@ button {
         padding: 3em 1em;
     }
 }
+
+.logo {
+    width: 200px;
+    height: 75px;
+}

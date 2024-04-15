@@ -105,10 +105,13 @@
           />
         </a>
         <div class="basket-item__quantity-container">
+
+        </div>
+        {% comment %} <div class="basket-item__quantity-container">
           <button class="button basket-item__quantity-change basket-item__quantity-decrease">-</button>
           <div class="basket-item__quantity">{{ item.quantity }}</div>
           <button class="button basket-item__quantity-change basket-item__quantity-increase">+</button>
-        </div>
+        </div> {% endcomment %}
         <div class="basket-item__title">{{ item.product.title }}</div>
         <div class="basket-item__price">{{ item.product.price|unlocalize }}</div>
       </div>

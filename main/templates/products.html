@@ -12,14 +12,14 @@
 
 <div class="search-container">
     <form class="search-form" method="GET" action="{% url 'products' %}">
+        <div class="input-group search-form__categories-input">
+            {{ search_form.category }}
+        </div>
         <div class="complex-input">
             <div class="search-form__input_container">{{ search_form.query }}</div>
             <button class="search-form__button" type="submit">
                 <img class="search-icon" src="{% static 'icons/search.png' %}" alt="find">
             </button>
-        </div>
-        <div class="search-form__categories-input">
-            {{ search_form.category }}
         </div>
     </form>
 </div>
