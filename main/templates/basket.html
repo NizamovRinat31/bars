@@ -4,10 +4,11 @@
 <link rel="stylesheet" href="{% static 'styles/basket.css' %}" />
 
 <script>
-  async function updateQuantity(csrfToken, productId, quantityElement) {
-    const url = `/product/${productId}/increase/`;
+  function updateQuantity(csrfToken, productId, quantityInput, quantity) {
+    const url = `/product/${productId}/quantity/`;
 
     const data = new FormData();
+    data.append("quantity", quantity);
     data.append("csrfmiddlewaretoken", csrfToken);
 
     return fetch(url, {
@@ -16,46 +17,26 @@
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
       body: new URLSearchParams(data),
-    }).then((response) => {
+    }).then(async (response) => {
+      if (response.status === 400) {
+        quantityInput.value = +(await response.text());
+        throw new Error("Can't update");
+      }
+
       if (!response.ok) {
         throw new Error("Can't update");
       }
       
-      quantityElement.textContent = +quantityElement.textContent + 1;
-    });
+      quantityInput.value = quantity;
+
+      return quantity;
+    })
   }
 
-  async function decreaseQuantity(csrfToken, productId, quantityElement, basketItemElement) {
-    const url = `/product/${productId}/decrease/`;
-
-    const data = new FormData();
-    data.append("csrfmiddlewaretoken", csrfToken);
-
-    return fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      },
-      body: new URLSearchParams(data),
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("Can't update");
-      }
-
-      if (+quantityElement.textContent <= 1) {
-        basketItemElement.remove();
-        return;
-      }
-      
-      quantityElement.textContent = +quantityElement.textContent - 1;
-    });
-  }
-
-  function updatePrice(priceElement, priceChange) {
+  function updateTotalPrice(priceElement, price) {
     console.log(priceElement.textContent);
     
-    const newPrice = +priceElement.textContent + priceChange;
-    const newPriceText = newPrice.toFixed(2);
+    const newPriceText = price.toFixed(2);
 
     priceElement.textContent = newPriceText;
   }
@@ -66,22 +47,16 @@
     const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value;
 
     for (const basketItem of basketItems) {
-      const decreaseButton = basketItem.querySelector(".basket-item__quantity-decrease");
-      const increaseButton = basketItem.querySelector(".basket-item__quantity-increase");
-      const quantityElement = basketItem.querySelector(".basket-item__quantity");
+      const quantityInput = basketItem.querySelector(".basket-item__quantity");
       const productId = basketItem.dataset.id;
 
-      decreaseButton.addEventListener("click", async () => {
-        await decreaseQuantity(
-          csrfToken, productId, 
-          quantityElement, basketItem.closest(".basket-item-container")
-        )
+      quantityInput.addEventListener("change", async () => {
+        const quantity = await updateQuantity(
+          csrfToken, productId,
+          quantityInput, quantityInput.value
+        );
         
-        updatePrice(totalPriceElement, -+basketItem.dataset.price);
-      });
-      increaseButton.addEventListener("click", async () => {
-        await updateQuantity(csrfToken, productId, quantityElement);
-        updatePrice(totalPriceElement, +basketItem.dataset.price);
+        updateTotalPrice(totalPriceElement, +basketItem.dataset.price * quantity);
       });
     }
   });
@@ -107,11 +82,9 @@
         <div class="basket-item__quantity-container">
 
         </div>
-        {% comment %} <div class="basket-item__quantity-container">
-          <button class="button basket-item__quantity-change basket-item__quantity-decrease">-</button>
-          <div class="basket-item__quantity">{{ item.quantity }}</div>
-          <button class="button basket-item__quantity-change basket-item__quantity-increase">+</button>
-        </div> {% endcomment %}
+        <div class="basket-item__quantity-container">
+          <input type="number" min="0" max="{{ item.product.count  }}" class="basket-item__quantity input" value="{{ item.quantity }}">
+        </div>
         <div class="basket-item__title">{{ item.product.title }}</div>
         <div class="basket-item__price">{{ item.product.price|unlocalize }}</div>
       </div>

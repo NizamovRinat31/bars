@@ -72,39 +72,47 @@ def basket_add_view(request: HttpRequest, id: int):
         None,
     )
 
-    if found_item is not None:
-        found_item['quantity'] = found_item['quantity'] + 1
-    else:
+    if found_item is None:
         basket.append({
             'product_id': id,
             'quantity': 1
         })
 
-    request.session['basket'] = basket
+        request.session['basket'] = basket
 
     return redirect('basket')
 
 
-def basket_increase_view(request: HttpRequest, id: int):
-    items = request.session.get('basket', [])
-    product = get_product_for_view(id=id)
+def basket_quantity_change_view(request: HttpRequest, id: int):
+    basket: list = request.session.get('basket', [])
+
+    try:
+        product = get_product_for_view(id=id)
+    except Http404:
+        request.session['basket'] = filter(
+            lambda item: item['product_id'] != id,
+            basket
+        )
+        redirect('basket')
 
     found_item = next(
-        (item for item in items if item['product_id'] == id),
+        (item for item in basket if item['product_id'] == id),
         None,
     )
 
     if found_item is None:
-        raise Http404('Товар не найден')
+        raise Http404('Такого продукта нет в корзине')
 
-    if product.count < found_item['quantity'] + 1:
-        raise HttpRequest('Товар закончился', status=400)
+    new_quantity = int(request.POST['quantity'])
 
-    found_item['quantity'] = found_item['quantity'] + 1
+    if new_quantity <= 0 or new_quantity > product.count:
+        return HttpResponse(found_item['quantity'], status=400)
 
-    request.session['basket'] = items
+    found_item['quantity'] = new_quantity
 
-    return HttpResponse(status=200)
+    request.session['basket'] = basket
+
+    return HttpResponse(found_item['quantity'])
 
 
 def basket_view(request: HttpRequest):
@@ -126,27 +134,6 @@ def basket_clear_view(request: HttpRequest):
     request.session.update({'basket': []})
 
     return redirect('basket')
-
-
-def basket_decrease_view(request: HttpRequest, id: int):
-    items = request.session.get('basket', [])
-
-    found_item = next(
-        (item for item in items if item['product_id'] == id),
-        None,
-    )
-
-    if found_item is None:
-        raise Http404('Товар не найден')
-
-    if found_item['quantity'] > 1:
-        found_item['quantity'] = found_item['quantity'] - 1
-    else:
-        items.remove(found_item)
-
-    request.session['basket'] = items
-
-    return HttpResponse(status=200)
 
 
 @require_http_methods(["POST"])

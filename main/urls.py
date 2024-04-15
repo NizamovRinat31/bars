@@ -11,14 +11,9 @@ urlpatterns = [
         name='add_to_basket'
     ),
     path(
-        'product/<int:id>/increase/',
-        views.basket_increase_view,
-        name='basket_increase'
-    ),
-    path(
-        'product/<int:id>/decrease/',
-        views.basket_decrease_view,
-        name='basket_decrease'
+        'product/<int:id>/quantity/',
+        views.basket_quantity_change_view,
+        name='basket_quantity_change'
     ),
     path('basket/', views.basket_view, name='basket'),
     path('basket/clear/', views.basket_clear_view, name='basket_clear'),
