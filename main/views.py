@@ -1,5 +1,5 @@
 from django.http import (
-    Http404, HttpRequest, HttpResponse, HttpResponseBadRequest
+    Http404, HttpRequest, HttpResponse, HttpResponseBadRequest, JsonResponse
 )
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -104,15 +104,22 @@ def basket_quantity_change_view(request: HttpRequest, id: int):
         raise Http404('Такого продукта нет в корзине')
 
     new_quantity = int(request.POST['quantity'])
+    old_quantity = found_item['quantity']
+
+    response_data = {
+        'old_quantity': old_quantity,
+        'quantity': new_quantity
+    }
 
     if new_quantity <= 0 or new_quantity > product.count:
-        return HttpResponse(found_item['quantity'], status=400)
+        response_data['quantity'] = old_quantity
+        return JsonResponse(response_data, status=400)
 
     found_item['quantity'] = new_quantity
 
     request.session['basket'] = basket
 
-    return HttpResponse(found_item['quantity'])
+    return JsonResponse(response_data)
 
 
 def basket_view(request: HttpRequest):

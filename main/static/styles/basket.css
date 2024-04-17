@@ -31,21 +31,12 @@
     align-items: center;
     justify-content: center;
     gap: 0.5em;
+    width: 15%;
 }
 
-.basket-item__quantity-change {
-    width: 1em;
-    height: 1em;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-}
-
-.basket-item__quantity-decrease {
-    padding-bottom: 0.2em;
+.basket-item__quantity {
+    display: block;
+    text-align: right;
 }
 
 .basket-total {
