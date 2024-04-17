@@ -66,3 +66,7 @@ python manage.py migrate - обновление/создание базы дан
 
 python manage.py createsuperuser --username admin --email admin@domain.com
 - добавить админ пользователя/ чтобы зайти от его имени нужно набрать 127.0.0.1:8000/admin
+
+__________
+
+https://stackoverflow.com/questions/21886792/django-how-to-attach-a-pdf-file-to-a-model-instance
