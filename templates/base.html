@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/ui-kit.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/pagination.css' %}">
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="logo-div">
+            <img class="logo" src="{% static 'icons/toplivnaya-kompaniya-bars.webp' %}" alt="profile">
+            <div class="logo-text">
+                <span class="text-block-wrap-div">Оптовая торговля бензином, дизельным топливом.</span>
+            </div>
+        </div>
+        <div class="menu">
+            <nav class="nav-menu">
+                <ul class="nav-menu__list">
+                    <li><a href="{% url 'products' %}">Товары</a></li>
+                    <li><a href="{% url 'basket' %}">Корзина</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-menu__profile"><a href="{% url 'profile' %}"><img class="nav-menu__profile-icon" src="{% static 'icons/profile.jpg' %}" alt="profile"></a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                    {% endif %}
+
+                    {% if user.is_staff %}
+                    <li><a href="{% url 'admin:index' %}">Администратор</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <div class="company-info-container">
+        <div class="company-info">
+            <img src="{% static 'icons/fon-shapki.webp' %}" alt="phone icon">
+            <div class="company-info-text">
+                <h3>О нас</h3>
+                <p>
+                    Мы придерживаемся принципа индивидуального подхода к каждому покупателю, приоритетом для нас являются надежное долгосрочное партнерство, оперативность и высокое качество поставляемого продукта.
+                    Наша материально-техническая база позволяет осуществлять доставку нефтепродуктов до указанного вами адреса в кратчайшие сроки. Мы располагаем собственным автопарком бензовозов, способных осуществлять перевозку нефтепродуктов объемом от 5 до 30 куб.
+                    Возможны два варианта поставки на ваше усмотрение: на условиях самовывоза по указанным ниже адресам, либо доставкой нашим автопарком. Стоимость доставки топлива рассчитывается по индивидуальному тарифу. Отдельно оговариваются условия поставки в пределах г. Ижевск.
+                    Дополнительно наша компания имеет возможность оказания услуг по хранению горюче-смазочных материалов.
+                    Кроме того, мы являемся авторизованным дизель-центром фирмы MakTest и производим ремонт сельхозтехники, дизельной аппаратуры, топливных систем (типа «Common-Rail» и др.), насос-форсунок разных типов, PLD-секций, ТНВД.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-item">
+            <img src="{% static 'icons/phone.png' %}" alt="phone icon">
+            <span>НАШ ТЕЛЕФОН:</span>
+            <span>+7 (937) 585-06-09</span>
+        </div>
+        <div class="footer-item">
+            <img src="{% static 'icons/geo.png' %}" alt="location icon">
+            <span>НАШ АДРЕС:</span>
+            <span>Удмуртская Республика, г. Ижевск.</span>
+        </div>
+        <div class="footer-item">
+            <img src="{% static 'icons/mail.png' %}" alt="email icon">
+            <span>EMAIL:</span>
+            <span>trade@tk-bars.ru</span>
+        </div>
+        <div class="copyright">
+            <span>Copyright © 2020 - 2024 ООО "БАРС"</span>
+        </div>
+    </footer>
+</body>
+</html>

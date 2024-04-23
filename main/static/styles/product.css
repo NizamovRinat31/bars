@@ -1,0 +1,106 @@
+.product-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 3em;
+    text-align: center;
+}
+
+.product__image {
+    width: 500px;
+    height: auto;
+}
+
+.product__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product__description-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .product__description-text {
+    flex: 1;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    margin-right: 20px;
+    font-size: 86.5%
+  }
+  
+  .product__image-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product__passport_image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .product__passport_link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #00b274;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border-color: black;
+  }
+  
+  .product__passport_link:hover {
+    background-color: #f03d43;
+  }
+  
+
+.product__title {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.product__original-price {
+    text-decoration: line-through;
+}
+
+.product__field {
+    text-align: center;
+}
+
+.product__price-container {
+    margin-bottom: 1em;
+}
+
+.product__prices-heading {
+    margin-bottom: 0.5em;
+}
+
+.product__add-to-basket-form {
+    margin-bottom: 1em;
+}
+
+.product__add-to-basket-button {
+    margin: 10px;
+    width: 100%;
+    color: #fff;
+    background-color:#00b274;
+    transition: background-color 0.3s ease;
+}
+
+.product__add-to-basket-button:hover {
+    background-color: #f03d43;
+}
+
+.product__add-to-basket-button[disabled]:hover {
+    background-color: transparent;
+    cursor: not-allowed;
+}

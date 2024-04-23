@@ -1,0 +1,258 @@
+from django.http import (
+    Http404, HttpRequest, HttpResponse, HttpResponseBadRequest, JsonResponse
+)
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views.decorators.http import require_http_methods
+from django.core.paginator import Paginator
+
+from .models import Order, OrderProduct, Product
+from .forms import SearchForm
+
+import os
+
+def products_view(request: HttpRequest):
+    products = Product.objects.filter(is_active=True)
+    products = products.order_by('-count')
+
+    search_form = SearchForm(request.GET)
+    if search_form.is_valid():
+        products = products.filter(
+            title__icontains=search_form.cleaned_data['query']
+        )
+
+    if search_form.is_valid() and search_form.cleaned_data['category']:
+        products = products.filter(
+            categories=search_form.cleaned_data['category']
+        )
+
+    paginator = Paginator(products, 6)
+
+    page_number = request.GET.get("page")
+    paged_products = paginator.get_page(page_number)
+
+    if not request.GET._mutable:
+        request.GET._mutable = True
+
+    request.GET['query'] = search_form.cleaned_data['query']
+    
+    return HttpResponse(render(request, 'products.html', {
+        'products_page': paged_products,
+        'search_form': search_form
+    }))
+
+def next_page_view(request):
+    query_dict = request.GET.copy()
+    if 'page' in query_dict:
+        current_page = int(query_dict['page'])
+        next_page = current_page + 1
+        query_dict['page'] = str(next_page)
+    return redirect(request.path + '?' + query_dict.urlencode())
+
+def previous_page_view(request):
+    query_dict = request.GET.copy()
+    if 'page' in query_dict:
+        current_page = int(query_dict['page'])
+        if current_page > 1:
+            previous_page = current_page - 1
+            query_dict['page'] = str(previous_page)
+        else:
+            return redirect(request.path)
+    return redirect(request.path + '?' + query_dict.urlencode())
+
+
+
+def get_product_for_view(id: int):
+    try:
+        product = Product.objects.get(id=id)
+    except Product.DoesNotExist:
+        raise Http404('Товар не найден')
+
+    if not product.is_active:
+        raise Http404('Товар не доступен')
+
+    return product
+
+
+def product_view(request: HttpRequest, id: int):
+    return HttpResponse(render(request, 'product.html', {
+        'product': get_product_for_view(id=id)
+    }))
+
+
+def basket_add_view(request: HttpRequest, id: int):
+    product = get_product_for_view(id=id)
+
+    if product.count < 1:
+        return redirect('product', id=id)
+
+    basket: list = request.session.get('basket', [])
+
+    found_item = next(
+        (item for item in basket if item['product_id'] == id),
+        None,
+    )
+
+    if found_item is None:
+        basket.append({
+            'product_id': id,
+            'quantity': 1
+        })
+
+        request.session['basket'] = basket
+
+    return redirect('basket')
+
+
+def basket_quantity_change_view(request: HttpRequest, id: int):
+    basket: list = request.session.get('basket', [])
+
+    try:
+        product = get_product_for_view(id=id)
+    except Http404:
+        request.session['basket'] = filter(
+            lambda item: item['product_id'] != id,
+            basket
+        )
+        redirect('basket')
+
+    found_item = next(
+        (item for item in basket if item['product_id'] == id),
+        None,
+    )
+
+    if found_item is None:
+        raise Http404('Такого продукта нет в корзине')
+
+    new_quantity = int(request.POST['quantity'])
+    old_quantity = found_item['quantity']
+
+    response_data = {
+        'old_quantity': old_quantity,
+        'quantity': new_quantity
+    }
+
+    if new_quantity <= 0 or new_quantity > product.count:
+        response_data['quantity'] = old_quantity
+        return JsonResponse(response_data, status=400)
+
+    found_item['quantity'] = new_quantity
+
+    request.session['basket'] = basket
+
+    return JsonResponse(response_data)
+
+
+def basket_view(request: HttpRequest):
+    items = request.session.get('basket', [])
+
+    for item in items:
+        item['product'] = Product.objects.get(id=item['product_id'])
+
+    total_price = sum(item['product'].price * item['quantity']
+                      for item in items)
+
+    return HttpResponse(render(request, 'basket.html', {
+        'items': items,
+        'total_price': total_price,
+    }))
+
+
+def basket_clear_view(request: HttpRequest):
+    request.session.update({'basket': []})
+
+    return redirect('basket')
+
+
+@require_http_methods(["POST"])
+def order_view(request: HttpRequest):
+    if not request.user.is_authenticated:
+        login_page = redirect('login')
+        login_page['Location'] += '?next=' + reverse('basket')
+
+        return login_page
+
+    if request.method == 'POST':
+        order = Order()
+        order.user = request.user
+        order.save()
+
+        basket = request.session.get('basket', [])
+
+        if len(basket) == 0:
+            return redirect('basket')
+
+        for item in basket:
+            product = Product.objects.get(id=item['product_id'])
+            if item['quantity'] > product.count:
+                return HttpResponseBadRequest('Товара не хватает')
+
+        for item in basket:
+            order_product = OrderProduct(order=order)
+            order_product.product = Product.objects.get(id=item['product_id'])
+            order_product.quantity = item['quantity']
+            order_product.product.count -= order_product.quantity
+            order_product.price = order_product.product.price
+            order_product.product.save()
+            order_product.save()
+
+        request.session.update({'basket': []})
+
+        return redirect('get_order', id=order.id)
+
+
+@require_http_methods(["GET"])
+def get_order_view(request: HttpRequest, id: int):
+    try:
+        order = Order.objects.get(id=id)
+    except Order.DoesNotExist:
+        raise Http404('Заказ не найден')
+
+    return HttpResponse(render(request, 'order.html', {
+        'order': order,
+        'products': OrderProduct.objects.filter(order=order),
+    }))
+
+
+@require_http_methods(["GET"])
+def cancel_order_view(request: HttpRequest, id: int):
+    try:
+        order = Order.objects.get(id=id)
+    except Order.DoesNotExist:
+        raise Http404('Заказ не найден')
+
+    if order.user != request.user:
+        return HttpResponseBadRequest(
+            'Вы не можете отменить этот заказ',
+            status='403'
+        )
+
+    if not order.is_cancelable:
+        return HttpResponseBadRequest(
+            'Этот заказ уже нельзя отменить. Обратитесь к администратору.',
+            status='400'
+        )
+
+    for order_product in OrderProduct.objects.filter(order=order):
+        order_product.product.count += order_product.quantity
+        order_product.product.save()
+
+    order.status = Order.Status.CANCELED
+    order.save()
+
+    return redirect('profile')
+
+def download_pdf(request, product_id):
+    try:
+        product = Product.objects.get(pk=product_id)
+        pdf_path = product.passport_pdf.path
+
+        if os.path.exists(pdf_path):
+            with open(pdf_path, 'rb') as f:
+                response = HttpResponse(f.read(), content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(pdf_path)
+                return response
+        else:
+            return HttpResponse("Файл PDF не найден", status=404)
+    except Product.DoesNotExist:
+        return HttpResponse("Продукт не найден", status=404)

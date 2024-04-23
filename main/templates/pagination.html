@@ -1,0 +1,14 @@
+<div class="pagination-links-container">
+    {% if page_obj.has_previous %}
+        {% if page_obj.number > 2 %}
+            <a href="?page=1&{% if request.GET.q %}q={{ request.GET.q }}{% endif %}">Первая</a>
+        {% endif %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Предыдущая</a>
+    {% endif %}
+    <span class="current">
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Следующая</a>
+    {% endif %}
+</div>

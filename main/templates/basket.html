@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% load static %} {% load l10n %} {% block head %}
+
+<title>Корзина</title>
+<link rel="stylesheet" href="{% static 'styles/basket.css' %}" />
+
+<script>
+  function updateQuantity(csrfToken, productId, quantityInput, quantity) {
+    const url = `/product/${productId}/quantity/`;
+
+    const data = new FormData();
+    data.append("quantity", quantity);
+    data.append("csrfmiddlewaretoken", csrfToken);
+
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: new URLSearchParams(data),
+    }).then(async (response) => {
+      if (!response.ok) {
+        throw new Error("Can't update");
+      }
+
+      return response.json();
+    }).then((data) => {
+      quantityInput.value = data.quantity;
+
+      return data;
+    })
+  }
+
+  function updateTotalPrice(priceElement, priceChange) {
+    const price = +priceElement.textContent;
+    
+    const newPriceText = (price + priceChange).toFixed(2);
+
+    priceElement.textContent = newPriceText;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const totalPriceElement = document.querySelector(".basket-total__price-value");
+    const basketItems = document.querySelectorAll(".basket-item");
+    const csrfToken = document.querySelector("input[name='csrfmiddlewaretoken']").value;
+
+    for (const basketItem of basketItems) {
+      const quantityInput = basketItem.querySelector(".basket-item__quantity");
+      const productId = basketItem.dataset.id;
+
+      quantityInput.addEventListener("change", async () => {
+        const data = await updateQuantity(
+          csrfToken, productId,
+          quantityInput, quantityInput.value
+        );
+        
+        updateTotalPrice(
+          totalPriceElement,
+          +basketItem.dataset.price * (data.quantity - data.old_quantity)
+        );
+      });
+    }
+  });
+
+
+</script>
+
+{% endblock %} {% block content %}
+
+<div class="basket-container">
+  {% csrf_token %}
+  <ul class="basket-item-list">
+    {% for item in items %}
+    <li class="basket-item-container">
+      <div class="basket-item" data-price="{{ item.product.price|unlocalize }}" data-id="{{ item.product.id }}">
+        <a href="{% url 'product' item.product.id %}">
+          <img
+            class="basket-item__image"
+            src="{% if item.product.image.url is not None %}{{ item.product.image.url }}{% endif %}"
+            alt="{{ item.product.title }}"
+          />
+        </a>
+        <div class="basket-item__quantity-container">
+          <input type="number" min="0" max="{{ item.product.count  }}" class="basket-item__quantity input" value="{{ item.quantity }}">
+        </div>
+        <div class="basket-item__title">{{ item.product.title }}</div>
+        <div class="basket-item__price">{{ item.product.price|unlocalize }} руб/тн</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="basket-total">
+    <div>
+      <div class="basket-total__price">
+        <span>Итого:</span>
+        <span class="basket-total__price-value">{{ total_price|unlocalize }}</span>
+        <span>руб.</span>
+      </div>
+      <form action="{% url 'make_order' %}" method="POST">
+        {% csrf_token %}
+        <button 
+          type="submit" class="button basket-total__buy-button"
+          {% if items|length == 0 %} disabled {% endif %}
+        >
+          Оформить заказ
+        </button>
+      </form>
+      <a
+        href="{% url 'basket_clear' %}"
+        class="button basket-total__clear-button"
+      >
+        Очистить корзину
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

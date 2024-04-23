@@ -1,0 +1,23 @@
+.pagination-links-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-links-container a {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #00b274;;
+}
+
+.pagination-links-container a:hover {
+    background-color: #f03d43;
+}
+
+.pagination-links-container .current {
+    font-weight: bold;
+}

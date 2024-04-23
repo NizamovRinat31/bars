@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<title>Товары</title>
+<link rel="stylesheet" href="{% static 'styles/products.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="search-container">
+    <form class="search-form" method="GET" action="{% url 'products' %}">
+        <div class="input-group search-form__categories-input">
+            {{ search_form.category }}
+        </div>
+        <div class="complex-input">
+            <div class="search-form__input_container">{{ search_form.query }}</div>
+            <button class="search-form__button" type="submit">
+                <img class="search-icon" src="{% static 'icons/search.png' %}" alt="find">
+            </button>
+        </div>
+    </form>
+</div>
+<hr class="products_page__horizonal_line">
+<ul class="product-list">
+    {% for product in products_page %}
+    <li>
+        <div 
+            class="
+                product-card
+                {% if product.count < 1 %}product-card_disabled{% endif %}
+            "
+        >
+
+            <img 
+                class="product-card__image" 
+                src="{% if product.image.url is not None %}{{ product.image.url }}{% endif %}" 
+                alt="{{ product.title }}"
+            />
+            <h2 class="product-card__title">{{ product.title }}</h2>
+            <div class="product-card__prices-container">
+            {% if product.original_price is not None %}
+            <p class="product-card__original-price">{{ product.original_price }}</p>
+            {% endif %}
+            <p class="product-card__price">{{ product.price }}</p>
+            </div>
+            
+            <a href="{% url 'product' product.id %}" class="button product-card__link">Подробнее</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+<hr class="products_page__horizonal_line">
+{% include 'pagination.html' with page_obj=products_page %}
+
+{% endblock %}
